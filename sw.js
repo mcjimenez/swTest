@@ -41,7 +41,8 @@ this.oncrossoriginmessage = function(msg) {
 };
 
 
-this.addEventListener('message', function(evt) {
+//this.addEventListener('message', function(evt) {
+onmessage = function(evt){
   debug('sw got a message: data:' + JSON.stringify(evt.data));
   self.clients.matchAll().then(function(res) {
     if (!res.length) {
@@ -49,4 +50,5 @@ this.addEventListener('message', function(evt) {
     }
     res[0].postMessage(evt.data);
   });
-});
+};
+//});
