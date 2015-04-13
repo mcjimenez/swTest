@@ -28,7 +28,7 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
         debug('registration --> active');
       }
       // Reload document... (yep sucks!)
-      location.reload();
+      //location.reload();
     }).catch(function(error) {
       debug('Registration failed with ' + error);
     });
