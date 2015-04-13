@@ -47,22 +47,14 @@ for (var i in evt){
 debug('sw '+i+":"+JSON.stringify(evt[i]));
 }
   debug('sw got a message: data:' + JSON.stringify(evt.data));
-  evt.target.clients.matchAll().then(function(res) {
-   if (!res.length) {
-     debug("ERROR: no clients are currently controlled.\n");
-   }
-    debug('Puest tiene client');
-    res[0].postMessage(evt.data);
- });
-
-/*
-  self.clients.matchAll({includeUncontrolled: true}).then(function(res) {    if (!res.length) {
+  self.clients.matchAll({includeUncontrolled: true, type: 'window'}).then(function(res) {
+    if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
+      return;
     }
-     evt.target.clients.matchAll().then(fucnt
-   debug(
+    debug('enviiar');
     res[0].postMessage(evt.data);
   });
-*/
+
 };
 //});
