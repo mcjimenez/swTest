@@ -59,8 +59,8 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
           count: count++
         }
       };
-      debug('sending message ' + (sw?' reg active':'reg NO active'));
-      sw && sw.postMessage(message);
+      debug('sending message ' + (sw.active?' reg active':'reg NO active'));
+      sw.active && sw.active.postMessage(message);
     });
   };
 
