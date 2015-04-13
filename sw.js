@@ -47,7 +47,7 @@ for (var i in evt){
 debug('sw '+i+":"+JSON.stringify(evt[i]));
 }
   debug('sw got a message: data:' + JSON.stringify(evt.data));
-  self.clients.matchAll().then(function(res) {
+  self.clients.matchAll({includeUncontrolled: true}).then(function(res) {
     if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
     }
