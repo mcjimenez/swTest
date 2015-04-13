@@ -47,12 +47,12 @@ for (var i in evt){
 debug('sw '+i+":"+JSON.stringify(evt[i]));
 }
   debug('sw got a message: data:' + JSON.stringify(evt.data));
-  self.clients.matchAll({includeUncontrolled: true, type: 'window'}).then(function(res) {
+  self.clients.matchAll().then(function(res) {
     if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
       return;
     }
-    debug('enviiar');
+    debug('enviar. Num clients: ' + res.length);
     res[0].postMessage(evt.data);
   });
 

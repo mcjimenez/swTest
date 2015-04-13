@@ -27,6 +27,8 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
       } else if (reg.active) {
         debug('registration --> active');
       }
+      // Reload document... (yep, sucks!)
+      location.reload();
     }).catch(function(error) {
       debug('Registration failed with ' + error);
     });
@@ -44,33 +46,31 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
 
   var sendConnectionMessage = function () {
     debug('sendConnectionMessage...');
-    navigator.serviceWorker.getRegistrations().then(function(regs) {
-      debug('Got regs: ' + JSON.stringify(regs));
-      regs.forEach(reg => {
-        debug('Got reg: ' + JSON.stringify(reg.active));
-        debug('*** creating msg');
-        // We must construct a structure here to indicate our sw partner that
-        var message = {
-          isFromIAC: true,
-          isConnectionRequest: true,
-          uuid: '12345678-9abc-4def-y012-34567890abcd',
-          dataToSend: {
-            data: "Hello from the main thread!",
-            count: count++
-          }
-        };
-        debug('sending message ' + (reg.active?' reg active':'reg NO active'));
-        reg.active && reg.active.postMessage(message);
+    navigator.serviceWorker.ready.then(sw => {
+      debug('Got a sw: ' + JSON.stringify(sw));
+      debug('*** creating msg');
+      // We must construct a structure here to indicate our sw partner that
+      var message = {
+        isFromIAC: true,
+        isConnectionRequest: true,
+        uuid: '12345678-9abc-4def-y012-34567890abcd',
+        dataToSend: {
+          data: "Hello from the main thread!",
+          count: count++
+        }
+      };
+      debug('sending message ' + (sw.active?' reg active':'reg NO active'));
+      navigator.serviceWorker.addEventListener('message', function(evt) {
+        debug('Msg recibido en app');
+        for (var kk in evt) {
+          debug("onMesssage -->:"+kk+":"+JSON.stringify(evt[kk]));
+        }
       });
+
+      sw.active && sw.active.postMessage(message);
     });
   };
 
-  window.addEventListener('message', function(evt) {
-    debug('Msg recibido en app');
-    for (var kk in evt) {
-      debug("onMesssage -->:"+kk+":"+JSON.stringify(evt[kk]));
-    }
-  });
 
   window.addEventListener('load', function () {
     debug('Document loaded!');
