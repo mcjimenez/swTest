@@ -8,7 +8,8 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
 
 (function() {
 
-  var count = 0;
+  var cltCount = 0;
+  var ORIG = 'clt';
 
   if (!('serviceWorker' in navigator)) {
     debug('navigator has not ServiceWorker');
@@ -56,7 +57,8 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
         uuid: '12345678-9abc-4def-y012-34567890abcd',
         dataToSend: {
           data: "Hello from the main thread!",
-          count: count++
+          org: ORIG,
+          cltCount: cltCount++
         }
       };
       debug('sending message ' + (sw.active ? ' sw active':' sw NO active'));

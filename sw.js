@@ -1,5 +1,8 @@
 'use strict';
 
+var swCount = 0;
+var ORIG = 'SW';
+
 function debug(str) {
   console.log("CJC sw.js -*- -->" + str);
 }
@@ -43,17 +46,17 @@ this.oncrossoriginmessage = function(msg) {
 
 //this.addEventListener('message', function(evt) {
 onmessage = function(evt) {
-  for (var i in evt){
-    debug('sw '+i+":"+JSON.stringify(evt[i]));
-  }
   debug('sw got a message: data:' + JSON.stringify(evt.data));
   self.clients.matchAll().then(function(res) {
     if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
       return;
     }
-    debug('enviiar');
-    res[0].postMessage(evt.data);
+    debug('enviar');
+    var respMsg = evt.data.dataToSend;
+    respMsg.org = ORIG;
+    respMsg.swCount = swCount++;
+    res[0].postMessage(respMsg);
   });
 
 };
