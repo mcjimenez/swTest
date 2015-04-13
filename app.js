@@ -60,16 +60,17 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
         }
       };
       debug('sending message ' + (sw.active?' reg active':'reg NO active'));
+      sw.addEventListener('message', function(evt) {
+        debug('Msg recibido en app');
+        for (var kk in evt) {
+          debug("onMesssage -->:"+kk+":"+JSON.stringify(evt[kk]));
+        }
+      });
+
       sw.active && sw.active.postMessage(message);
     });
   };
 
-  window.addEventListener('message', function(evt) {
-    debug('Msg recibido en app');
-    for (var kk in evt) {
-      debug("onMesssage -->:"+kk+":"+JSON.stringify(evt[kk]));
-    }
-  });
 
   window.addEventListener('load', function () {
     debug('Document loaded!');
