@@ -65,12 +65,12 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
     });
   };
 
-  window.onmessage = function(evt) {
+  window.addEventListener('message', function(evt) {
     debug('Msg recibido en app');
     for (var kk in evt) {
       debug("onMesssage -->:"+kk+":"+JSON.stringify(evt[kk]));
     }
-  };
+  });
 
   window.addEventListener('load', function () {
     debug('Document loaded!');
