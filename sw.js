@@ -42,7 +42,10 @@ this.oncrossoriginmessage = function(msg) {
 
 
 //this.addEventListener('message', function(evt) {
-onmessage = function(evt){
+onmessage = function(evt) {
+for (var i in evt){
+debug('sw '+i+":"+JSON.stringify(evt[i]));
+}
   debug('sw got a message: data:' + JSON.stringify(evt.data));
   self.clients.matchAll().then(function(res) {
     if (!res.length) {
