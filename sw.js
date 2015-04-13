@@ -29,25 +29,11 @@ this.onconnect = function(msg) {
   msg.source.onmessage = function(msg) {
     debug("Got a message from one of the accepted connections!");
   };
-}
-
-this.oncrossoriginmessage = function(msg) {
-  // msg.source is always a client previously accepted by onconnect.
-  debug('oncrossoriginmessage Event');
-/*
-  if (msg.data.type == 'foo') {
-    msg.source.postMessage({type: 'reply', payload: 'bar'});
-    return;
-  }
-  msg.source.postMessage({type: 'error', payload: 'Invalid message'});
-*/
 };
 
-
-//this.addEventListener('message', function(evt) {
-onmessage = function(evt) {
-  debug('sw got a message: data:' + JSON.stringify(evt.data));
-  self.clients.matchAll().then(function(res) {
+onmessage = evt => {
+  debug('SW got a message: data:' + JSON.stringify(evt.data));
+  self.clients.matchAll().then(res => {
     if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
       return;
@@ -58,6 +44,4 @@ onmessage = function(evt) {
     respMsg.swCount = swCount++;
     res[0].postMessage(respMsg);
   });
-
 };
-//});

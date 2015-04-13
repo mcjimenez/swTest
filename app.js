@@ -37,9 +37,9 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
 
   var unregister = function(evt) {
     debug('Unregister...');
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      registrations.forEach(function (registration) {
-        registration.unregister();
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      regs.forEach(reg => {
+        reg.unregister();
         debug('Unregister done');
       });
     });
@@ -62,11 +62,8 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
         }
       };
       debug('sending message ' + (sw.active ? ' sw active':' sw NO active'));
-      navigator.serviceWorker.addEventListener('message', function(evt) {
-        debug('Msg recibido en app');
-        for (var kk in evt) {
-          debug('onMesssage -->' + kk + ':' + JSON.stringify(evt[kk]));
-        }
+      navigator.serviceWorker.addEventListener('message', evt => {
+        debug('Msg recibido en app --> ' + JSON.stringify(evt.data));
       });
       sw.active && sw.active.postMessage(message);
     });
