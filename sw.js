@@ -42,10 +42,7 @@ this.oncrossoriginmessage = function(msg) {
 
 
 this.addEventListener('message', function(evt) {
-  debug('sw got a message:');
-  for (var kk in evt) {
-    debug(kk+':'+JSON.stringify(evt[kk]));
-  }
+  debug('sw got a message: data:' + JSON.stringify(evt.data));
   self.clients.matchAll().then(function(res) {
     if (!res.length) {
       debug("ERROR: no clients are currently controlled.\n");
