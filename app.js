@@ -17,7 +17,7 @@ debug('Self: ' + (self?'EXISTS':'DOES NOT EXIST'));
 
   var register = function(evt) {
     debug('executing register...');
-    navigator.serviceWorker.register('sw.js', {scope: '/swshim/'}
+    navigator.serviceWorker.register('sw.js', {scope: '/swtest/'}
     ).then(function(reg) {
       debug('Registration succeeded. Scope: ' + reg.scope);
       if (reg.installing) {
