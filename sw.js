@@ -52,7 +52,7 @@ debug('sw '+i+":"+JSON.stringify(evt[i]));
       debug("ERROR: no clients are currently controlled.\n");
       return;
     }
-    debug('enviiar');
+    debug('enviar');
     res[0].postMessage(evt.data);
   });
 
